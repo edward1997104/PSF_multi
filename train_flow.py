@@ -459,7 +459,7 @@ def main():
         opt.schedule_type = 'warm0.1'
 
     exp_id = os.path.splitext(os.path.basename(__file__))[0]
-    dir_id = os.path.join(opt.output_folder, opt.category, exp_id)
+    dir_id = os.path.join(opt.output_folder, opt.category)
     output_dir = get_output_dir(dir_id, exp_id)
     copy_source(__file__, output_dir)
 
