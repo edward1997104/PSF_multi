@@ -335,10 +335,10 @@ def train(gpu, opt, output_dir, noises_init):
     if opt.model != '':
         ckpt = torch.load(opt.model)
         model.load_state_dict(ckpt['model_state'])
-        #optimizer.load_state_dict(ckpt['optimizer_state'])
+        optimizer.load_state_dict(ckpt['optimizer_state'])
 
     if opt.model != '':
-        start_epoch = 0#torch.load(opt.model)['epoch'] + 1
+        start_epoch = torch.load(opt.model)['epoch'] + 1
     else:
         start_epoch = 0
 
