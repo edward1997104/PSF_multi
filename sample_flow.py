@@ -596,7 +596,7 @@ def train(gpu, opt, output_dir, noises_init):
                 x0 = torch.cat(x0, 0)
                 x1 = torch.cat(x1, 0)
                 # This should be parallely sampled with 8 GPUs in practice , here we only use one as example
-                torch.save([x0, x1], 'DATASET.pth')
+                torch.save([x0, x1], f'DATASET_{opt.category}.pth')
 
                 exit(0)
 
