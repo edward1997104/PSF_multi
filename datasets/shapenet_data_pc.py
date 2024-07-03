@@ -43,8 +43,10 @@ class Uniform15KPC(Dataset):
                  reflow = False,
                  normalize_std_per_axis=False,
                  all_points_mean=None, all_points_std=None,
-                 input_dim=3, use_mask=False):
+                 input_dim=3, use_mask=False,
+                 categories=None):
         self.root_dir = root_dir
+        self.categories = categories
         self.split = split
         self.in_tr_sample_size = tr_sample_size
         self.in_te_sample_size = te_sample_size
@@ -136,7 +138,8 @@ class Uniform15KPC(Dataset):
               % (self.tr_sample_size, self.te_sample_size))
         assert self.scale == 1, "Scale (!= 1) is deprecated"
         if reflow:
-            reflow_data = torch.load('DATASET.pth', map_location='cpu')
+            assert len(categories) == 1
+            reflow_data = torch.load(f'DATASET_{categories[0]}.pth', map_location='cpu')
             self.x0 = reflow_data[0]
             self.x1 = reflow_data[1]
     def get_pc_stats(self, idx):
@@ -257,7 +260,8 @@ class ShapeNet15kPointClouds(Uniform15KPC):
             normalize_std_per_axis=normalize_std_per_axis,
             random_subsample=random_subsample,
             all_points_mean=all_points_mean, all_points_std=all_points_std,
-            input_dim=3, use_mask=use_mask)
+            input_dim=3, use_mask=use_mask,
+            categories=self.cates)
 
 
 
