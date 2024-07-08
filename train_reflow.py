@@ -336,7 +336,11 @@ def train(gpu, opt, output_dir, noises_init):
         #optimizer.load_state_dict(ckpt['optimizer_state'])
 
     if opt.model != '':
-        start_epoch = 0
+        if opt.is_continue_training:
+            start_epoch = torch.load(opt.model)['epoch'] + 1
+            print("continue training from epoch %d" % start_epoch)
+        else:
+            start_epoch = 0
     else:
         start_epoch = 0
 
@@ -513,6 +517,7 @@ def parse_args():
     parser.add_argument('--lr_gamma', type=float, default=0.998, help='lr decay for EBM')
 
     parser.add_argument('--model', default='', help="path to model (to continue training)")
+    parser.add_argument('--is_continue_training', default=False, help="continue training", action='store_true')
 
 
     '''distributed'''
