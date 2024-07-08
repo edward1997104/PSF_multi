@@ -464,7 +464,7 @@ def main():
         opt.schedule_type = 'warm0.1'
 
     exp_id = os.path.splitext(os.path.basename(__file__))[0]
-    dir_id = os.path.dirname(__file__)
+    dir_id = os.path.join(opt.output_folder, opt.category)
     output_dir = get_output_dir(dir_id, exp_id)
     copy_source(__file__, output_dir)
 
@@ -544,6 +544,8 @@ def parse_args():
     parser.add_argument('--print_freq', default=50, help='unit: iter')
 
     parser.add_argument('--manualSeed', default=42, type=int, help='random seed')
+    parser.add_argument('--output_folder', default='output', help='output folder')
+
 
 
     opt = parser.parse_args()
