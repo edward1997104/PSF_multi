@@ -1,7 +1,7 @@
 import torch
 from pprint import pprint
-from metrics.evaluation_metrics import jsd_between_point_cloud_sets as JSD
-from metrics.evaluation_metrics import compute_all_metrics, EMD_CD
+# from metrics.evaluation_metrics import jsd_between_point_cloud_sets as JSD
+# from metrics.evaluation_metrics import compute_all_metrics, EMD_CD
 
 import torch.nn as nn
 import torch.utils.data
@@ -632,7 +632,7 @@ def parse_args():
     parser.add_argument('--niter', type=int, default=10000, help='number of epochs to train for')
 
     parser.add_argument('--generate',default=True)
-    parser.add_argument('--eval_gen', default=True)
+    parser.add_argument('--eval_gen', default=False)
 
     parser.add_argument('--nc', default=3)
     parser.add_argument('--npoints', default=2048)
