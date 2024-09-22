@@ -525,6 +525,23 @@ def evaluate_gen(opt, ref_pcs, logger):
     logger.info('JSD: {}'.format(jsd))
 
 
+def save_ply_file(points, filename):
+    """
+    Save a point cloud to a PLY file.
+
+    Parameters:
+    - filename (str): The output PLY file name.
+    - points (numpy.ndarray): A Nx3 NumPy array representing the point cloud.
+
+    Returns:
+    - None
+    """
+    header = "ply\nformat ascii 1.0\nelement vertex {}\nproperty float x\nproperty float y\nproperty float z\nend_header".format(len(points))
+
+    with open(filename, 'w') as ply_file:
+        ply_file.write(header + '\n')
+        for point in points:
+            ply_file.write('{} {} {}\n'.format(point[0], point[1], point[2]))
 
 def generate(model, opt):
 
@@ -565,6 +582,13 @@ def generate(model, opt):
         ref = torch.cat(ref, dim=0)
 
         torch.save(samples, opt.eval_path)
+
+        final_saving_folder = os.path.join(opt.saving_folder, str(opt.time_num))
+        os.makedirs(final_saving_folder, exist_ok=True)
+
+        for i in range(samples.size(0)):
+            save_ply_file(samples[i].cpu().numpy(), os.path.join(final_saving_folder, f'{i}.ply'))
+            print(f"Saved {i}.ply to {final_saving_folder}")
 
 
 
@@ -648,6 +672,7 @@ def parse_args():
     parser.add_argument('--loss_type', default='mse')
     parser.add_argument('--model_mean_type', default='eps')
     parser.add_argument('--model_var_type', default='fixedsmall')
+    parser.add_argument('--saving_folder', default='./gt')
 
 
     parser.add_argument('--model', default='',required=True, help="path to model (to continue training)")
