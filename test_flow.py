@@ -544,6 +544,8 @@ def save_ply_file(points, filename):
             ply_file.write('{} {} {}\n'.format(point[0], point[1], point[2]))
 
 def generate(model, opt):
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f'Total parameters: {total_params}')
 
     _, test_dataset = get_dataset(opt.dataroot, opt.npoints, opt.category)
 
